@@ -24,6 +24,11 @@ myApp.config(function($stateProvider) {
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
 
+    function fun () {
+        console.log('fun clicked');
+        getRequest(null, '47.660, -122.305, 47.661, -122.306', 'unknown', null, null, 'DMW4aNjSmkrBenZLWUsF');
+    }
+
     function getRequest (query, boundbox, wheelchair, page, per_page, key) {
         var url = 'http://wheelmap.org/api/nodes/search?api_key=' + key;
 
@@ -49,10 +54,12 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
         }).then(function successCallback(response) {
             // this callback will be called asynchronously
             // when the response is available
+            console.log(response);
             return response;
         }, function errorCallback(response) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
+            console.log(response);
             return null;
         });
     }
