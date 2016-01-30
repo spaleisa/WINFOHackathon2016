@@ -3,17 +3,12 @@
 var myApp = angular.module('myApp', ['firebase', 'ui.router']);
 var ref = new Firebase("https://winfo.firebaseio.com/");
 
-myApp.config(function($stateProvider) {
+myApp.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('home', {
       url: '/',
       templateUrl: 'templates/home.html',
       controller: 'HomeController'
-    })
-    .state('main', {
-        url: '/main',
-        templateUrl: 'templates/main.html',
-        controller: 'MainController'
     })
     .state('leaderboard', {
         url: '/leaderboard',
@@ -30,6 +25,7 @@ myApp.config(function($stateProvider) {
         templateUrl: 'templates/list.html',
         controller: 'ListController'
     })
+    $urlRouterProvider.otherwise('/');
 });
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
@@ -129,21 +125,18 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
             // or server returns response with an error status.
             return null;
         });
+
+        var name = $scope.name;
+        var type = $scope.type;
+        var lat = $scope.lat;
+        var lon = $scope.lon;
+        var date = $scope.date;
+        placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope);
     }
 
     var email = $scope.email;
     var password = $scope.password;
     logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
-});
-
-myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
-    var name = $scope.name;
-    var type = $scope.type;
-    var lat = $scope.lat;
-    var lon = $scope.lon;
-    var date = $scope.date;
-    placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope);
-
 });
 
 myApp.controller('LeaderboardController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
