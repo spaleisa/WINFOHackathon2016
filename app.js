@@ -11,6 +11,16 @@ myApp.config(function($stateProvider) {
       templateUrl: 'templates/home.html',
       controller: 'HomeController'
     })
+    .state('main', {
+    	url: '/main',
+    	templateUrl: 'templates/main.html',
+    	controller: 'MainController'
+    })
+    .state('leaderboard', {
+    	url: '/leaderboard',
+    	templateUrl: 'templates/leaderboard.html',
+    	controller: 'LeaderboardController'
+    })
 });
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
@@ -18,6 +28,37 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 	var password = $scope.password;
 	logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
 });
+
+myApp.controller('MainController', function($scope $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+	var name = $scope.name;
+	var type = $scope.type;
+	var lat = $scope.lat;
+	var lon = $scope.lon;
+	function placeSave(name, type, lat, lon, $firebaseObject, $firebaseAuth, $location, $http, $scope);
+});
+
+myApp.controller('LeaderboardController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+
+});
+
+function placeSave(name, type, lat, lon, $firebaseObject, $firebaseAuth, $location, $http, $scope) {
+	var userRef = ref.child("users");
+	var name = name;
+	var type = type;
+	var date = date;
+	var lat = lat;
+	var lon = lon;
+	var userobjectsRef = userRef.child($scope.email);
+	var userPlaceRef = userobjectsRef.child(name);
+	var PlaceObject = $firebaseObject(userPlaceRef);
+	PlaceObject = {
+		"name": name,
+		"type": type,
+		"date": date,
+		"lat": lat,
+		"lon": lon
+	}
+}
 
 function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http){
 	// Create a variable 'ref' to reference your firebase storage
