@@ -1,5 +1,7 @@
-'use strict';
-
+/**
+ * Created by Brad on 1/30/2016.
+ */
+console.log("kk");
 var myApp = angular.module('myApp', ['firebase', 'ui.router']);
 var ref = new Firebase("https://winfo.firebaseio.com/");
 
@@ -220,15 +222,16 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
         $scope.userId = false;
 		$location.path('/');
     }
+
 }
 
 function success(pos) {
-  var crd = pos.coords;
+    var crd = pos.coords;
 
-  console.log('Your current position is:');
-  console.log('Latitude : ' + crd.latitude);
-  console.log('Longitude: ' + crd.longitude);
-  console.log('More or less ' + crd.accuracy + ' meters.');
+    console.log('Your current position is:');
+    console.log('Latitude : ' + crd.latitude);
+    console.log('Longitude: ' + crd.longitude);
+    console.log('More or less ' + crd.accuracy + ' meters.');
 };
 
 navigator.geolocation.getCurrentPosition(success);
