@@ -1,12 +1,36 @@
 <!DOCTYPE html>
-<head>
-	<!-- Angular -->
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<html lang="en" ng-app="CoffeeApp">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- Firebase -->
-	<script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+		<link rel="stylesheet" href="main.css">
 
-	<!-- AngularFire -->
-	<script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script></head>
-<body>
-</body>
+		<!-- Angular -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+
+		<!-- Firebase -->
+		<script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+
+		<!-- AngularFire -->
+		<script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script></head>
+	<body>
+		<nav class="navbar">
+			<ul>
+				<li><a ui-sref=""><i class="fa fa-trophy"></i></a></li>
+				<li><a ui-sref=""><i class="fa fa-wheelchair"></i></a></li>
+				<li><a ui-sref=""><i class="fa fa-list-ul"></i></a></li>
+				<li><a ui-sref=""><i class="fa fa-user"></i></a></li>
+			</ul>
+		</nav>
+
+		<h1>Header</h1>
+		<img src="img/logo.png"></img>
+
+		<div ui-view></div>
+
+		<div class="container" id="footer">
+			
+		</div>
+	</body>
+</html>

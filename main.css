@@ -1,0 +1,53 @@
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css");
+@import url("https://fonts.googleapis.com/css?family=Raleway:400,300");
+@import url("https://fonts.googleapis.com/css?family=Lato:400,300,300italic");
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
+
+body {
+  font-family: Lato, 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  background-color: #E9EAEE;
+  text-align: center;
+}
+
+.navbar li {
+  display: inline-block;
+  list-style-type: none;
+  padding: .5em;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.navbar a {
+  color: white;
+  font-size: 16px;
+  text-decoration: none;
+  font-variant: small-caps; /*links rendered in small caps p.small*/
+}
+
+.navbar a:hover {
+  color: #d87e28;
+  text-decoration: none;
+}
+
+.navbar {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100vw;
+  background-color: #181c22;
+  margin: 0px;
+  border-radius: 0px;
+  min-height: auto;
+}
+
+.navbar ul {
+  margin-bottom: 0px;
+  margin-top: 0px;
+  padding-left: 15px;
+}
+
+h1 {
+	margin-top: 2em;
+}
