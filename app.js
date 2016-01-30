@@ -20,6 +20,16 @@ myApp.config(function($stateProvider) {
     	templateUrl: 'templates/leaderboard.html',
     	controller: 'LeaderboardController'
     })
+    .state('user', {
+        url: '/user',
+        templateUrl: 'templates/user.html',
+        controller: 'UserController'
+    })
+    .state('list', {
+        url: '/list',
+        templateUrl: 'templates/list.html',
+        controller: 'ListController'
+    })
 });
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
@@ -130,6 +140,14 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
 });
 
 myApp.controller('LeaderboardController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+
+});
+
+myApp.controller('ListController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+
+});
+
+myApp.controller('UserController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
 
 });
 
