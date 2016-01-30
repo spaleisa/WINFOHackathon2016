@@ -1,6 +1,7 @@
 /**
  * Created by Brad on 1/30/2016.
  */
+console.log("kk");
 var myApp = angular.module('myApp', ['firebase', 'ui.router']);
 var ref = new Firebase("https://winfo.firebaseio.com/");
 
