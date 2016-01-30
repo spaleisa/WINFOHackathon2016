@@ -125,7 +125,8 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
 	var type = $scope.type;
 	var lat = $scope.lat;
 	var lon = $scope.lon;
-	function placeSave(name, type, lat, lon, $firebaseObject, $firebaseAuth, $location, $http, $scope);
+	var date = $scope.date;
+	function placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope);
 
 });
 
@@ -133,7 +134,7 @@ myApp.controller('LeaderboardController', function($scope, $firebaseAuth, $fireb
 
 });
 
-function placeSave(name, type, lat, lon, $firebaseObject, $firebaseAuth, $location, $http, $scope) {
+function placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope) {
 	var userRef = ref.child("users");
 	var name = name;
 	var type = type;
