@@ -24,24 +24,117 @@ myApp.config(function($stateProvider) {
 });
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+
+    function getRequest (query, boundbox, wheelchair, page, per_page, key) {
+        var url = 'http://wheelmap.org/api/nodes/search?api_key=' + key;
+
+        if (query != null) {
+            url += '&q=' + query;
+        }
+        if (boundbox != null) {
+            url += '&bbox='; // + USER LAT, LONG BOUNDS + X DISTANCE
+        }
+        if (wheelchair != null) {
+            url += '&wheelchair=' + wheelchair;
+        }
+        if (page != null) {
+            url += '&page=' + page;
+        }
+        if (per_page != null) {
+            url += '&per_page=' + per_page;
+        }
+
+        $http({
+            method: 'GET',
+            url: url
+        }).then(function successCallback(response) {
+            // this callback will be called asynchronously
+            // when the response is available
+            return response;
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            return null;
+        });
+    }
+
+    function putRequest (node_id, type, lat, lon, wheelchair, name, wheelchair_description,
+                         street, housenumber, city, postcode, website, phone, key) {
+        var url = 'http://wheelmap.org/api/nodes/' + node_id + '?api_key=' + key;
+
+        if (type != null) {
+            url += '&type=' + type;
+        }
+        if (lat != null) {
+            url += '&lat=' + lat;
+        }
+        if (lon != null) {
+            url += '&lon=' + lon;
+        }
+        if (wheelchair != null) {
+            url += '&wheelchair=' + wheelchair;
+        }
+        if (name != null) {
+            url += '&name=' + name;
+        }
+        if (wheelchair_description != null) {
+            url += '&wheelchair_description=' + wheelchair_description;
+        }
+        if (street != null) {
+            url += '&street=' + street;
+        }
+        if (housenumber != null) {
+            url += '&housenumber=' + housenumber;
+        }
+        if (city != null) {
+            url += '&city=' + city;
+        }
+        if (postcode != null) {
+            url += '&postcode=' + postcode;
+        }
+        if (website != null) {
+            url += '&website=' + website;
+        }
+        if (phone != null) {
+            url += '&phone=' + phone;
+        }
+
+        url += 'method=PUT';
+
+        $http({
+            method: 'POST',
+            url: url
+        }).then(function successCallback(response) {
+            // this callback will be called asynchronously
+            // when the response is available
+            return response;
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            return null;
+        });
+    }
+
 	var email = $scope.email;
 	var password = $scope.password;
 	logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
 });
 
-myApp.controller('MainController', function($scope $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
 	var name = $scope.name;
 	var type = $scope.type;
 	var lat = $scope.lat;
 	var lon = $scope.lon;
-	function placeSave(name, type, lat, lon, $firebaseObject, $firebaseAuth, $location, $http, $scope);
+	var date = $scope.date;
+	placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope);
+
 });
 
 myApp.controller('LeaderboardController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
 
 });
 
-function placeSave(name, type, lat, lon, $firebaseObject, $firebaseAuth, $location, $http, $scope) {
+function placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope) {
 	var userRef = ref.child("users");
 	var name = name;
 	var type = type;
@@ -101,18 +194,18 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
 				alert("Email already in use")
 			}
         });
-    }
+    };
 
     // SignIn function, reads whatever set-up the user has
     $scope.signIn = function() {
         $scope.logIn().then(function(authData){
-            $scope.userId = authData.uid
-			console.log($scope.userId)
+            $scope.userId = authData.uid;
+			console.log($scope.userId);
 			var id = $scope.userId;
-			$scope.badges = $scope.users[id].badges
+			$scope.badges = $scope.users[id].badges;
 			location.reload();
         })
-    }
+    };
 	
     // LogIn function
     $scope.logIn = function() {
@@ -120,7 +213,7 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
             email: $scope.email,
             password: $scope.password
         })
-    }
+    };
 	
     // LogOut function
     $scope.logOut = function() {
@@ -128,4 +221,16 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
         $scope.userId = false;
 		$location.path('/');
     }
+
 }
+
+function success(pos) {
+    var crd = pos.coords;
+
+    console.log('Your current position is:');
+    console.log('Latitude : ' + crd.latitude);
+    console.log('Longitude: ' + crd.longitude);
+    console.log('More or less ' + crd.accuracy + ' meters.');
+};
+
+navigator.geolocation.getCurrentPosition(success);
