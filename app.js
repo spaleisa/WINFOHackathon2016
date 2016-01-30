@@ -126,7 +126,7 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
 	var lat = $scope.lat;
 	var lon = $scope.lon;
 	var date = $scope.date;
-	function placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope);
+	placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope);
 
 });
 
