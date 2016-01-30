@@ -14,10 +14,12 @@ myApp.config(function($stateProvider) {
 });
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
-	
+	var email = $scope.email;
+	var password = $scope.password;
+	logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
 });
 
-function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http){
+function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http){
 	// Create a variable 'ref' to reference your firebase storage
     var userRef = ref.child("users");
 
@@ -81,9 +83,8 @@ function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAu
 	
     // LogOut function
     $scope.logOut = function() {
-        $scope.authObj.$unauth()
-        $scope.userId = false
-		$location.path('/')
-		$scope.badges = []
+        $scope.authObj.$unauth();
+        $scope.userId = false;
+		$location.path('/');
     }
 }
