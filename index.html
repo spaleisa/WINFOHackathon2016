@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="CoffeeApp">
+<html lang="en" ng-app="myApp" ng-controller="HomeController">
 	<head>
 		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
+		<title>Door Stop</title>
+
+		<link rel="icon" type="image/png" href="#" />
 		<link rel="stylesheet" href="main.css">
 
 		<!-- Angular -->
@@ -17,17 +21,17 @@
 	<body>
 		<nav class="navbar">
 			<ul>
-				<li><a ui-sref=""><i class="fa fa-trophy"></i></a></li>
-				<li><a ui-sref=""><i class="fa fa-wheelchair"></i></a></li>
-				<li><a ui-sref=""><i class="fa fa-list-ul"></i></a></li>
-				<li><a ui-sref=""><i class="fa fa-user"></i></a></li>
+				<li><a ui-sref="leaderboard"><i class="fa fa-trophy"></i></a></li>
+				<li><a ui-sref="main"><i class="fa fa-wheelchair"></i></a></li>
+				<li><a ui-sref="list"><i class="fa fa-list-ul"></i></a></li>
+				<li><a ui-sref="user"><i class="fa fa-user"></i></a></li>
 			</ul>
 		</nav>
 
 		<h1>Header</h1>
 		<img src="img/logo.png"></img>
 
-		<div ui-view></div>
+		<div id="uiView" ui-view></div>
 
 		<div class="container" id="footer">
 			
