@@ -131,9 +131,6 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
         });
     }
 
-    var email = $scope.email;
-    var password = $scope.password;
-    logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
 });
 
 myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
@@ -155,7 +152,9 @@ myApp.controller('ListController', function($scope, $firebaseAuth, $firebaseArra
 });
 
 myApp.controller('UserController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
-
+    var email = $scope.email;
+    var password = $scope.password;
+    logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
 });
 
 function placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope) {
