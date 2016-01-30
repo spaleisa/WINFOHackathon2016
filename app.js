@@ -24,10 +24,10 @@ myApp.config(function($stateProvider) {
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
 
-    function fun () {
+    $scope.fun = function () {
         console.log('fun clicked');
         getRequest(null, '47.660, -122.305, 47.661, -122.306', 'unknown', null, null, 'DMW4aNjSmkrBenZLWUsF');
-    }
+    };
 
     function getRequest (query, boundbox, wheelchair, page, per_page, key) {
         var url = 'http://wheelmap.org/api/nodes/search?api_key=' + key;
