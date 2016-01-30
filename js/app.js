@@ -4,30 +4,40 @@ var myApp = angular.module('myApp', ['firebase', 'ui.router']);
 var ref = new Firebase("https://winfo.firebaseio.com/");
 
 myApp.config(function($stateProvider) {
-    $stateProvider
-        .state('home', {
-            url: '/',
-            templateUrl: 'templates/home.html',
-            controller: 'HomeController'
-        })
-        .state('main', {
-            url: '/main',
-            templateUrl: 'templates/main.html',
-            controller: 'MainController'
-        })
-        .state('leaderboard', {
-            url: '/leaderboard',
-            templateUrl: 'templates/leaderboard.html',
-            controller: 'LeaderboardController'
-        })
+  $stateProvider
+    .state('home', {
+      url: '/',
+      templateUrl: 'templates/home.html',
+      controller: 'HomeController'
+    })
+    .state('main', {
+        url: '/main',
+        templateUrl: 'templates/main.html',
+        controller: 'MainController'
+    })
+    .state('leaderboard', {
+        url: '/leaderboard',
+        templateUrl: 'templates/leaderboard.html',
+        controller: 'LeaderboardController'
+    })
+    .state('user', {
+        url: '/user',
+        templateUrl: 'templates/user.html',
+        controller: 'UserController'
+    })
+    .state('list', {
+        url: '/list',
+        templateUrl: 'templates/list.html',
+        controller: 'ListController'
+    })
 });
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
 
-    $scope.fun = function () {
+    function fun () {
         console.log('fun clicked');
         getRequest(null, '47.660, -122.305, 47.661, -122.306', 'unknown', null, null, 'DMW4aNjSmkrBenZLWUsF');
-    };
+    }
 
     function getRequest (query, boundbox, wheelchair, page, per_page, key) {
         var url = 'http://wheelmap.org/api/nodes/search?api_key=' + key;
@@ -140,6 +150,14 @@ myApp.controller('LeaderboardController', function($scope, $firebaseAuth, $fireb
 
 });
 
+myApp.controller('ListController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+
+});
+
+myApp.controller('UserController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+
+});
+
 function placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope) {
     var userRef = ref.child("users");
     var name = name;
@@ -165,10 +183,10 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
 
     // Create a firebaseObject of your users, and store this as part of $scope
     $scope.users = $firebaseObject(userRef);
-
+    
     // Create authorization object that referes to firebase
     $scope.authObj = $firebaseAuth(ref);
-
+    
     // Test if already logged in
     var authData = $scope.authObj.$getAuth();
     if (authData) {
@@ -182,24 +200,24 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
 
         // Authenticate user
         $scope.authObj.$createUser({
-                email: $scope.email,
-                password: $scope.password
-            })
+            email: $scope.email,
+            password: $scope.password
+        })
 
-            // Once the user is created, call the logIn function
-            .then($scope.logIn)
+        // Once the user is created, call the logIn function
+        .then($scope.logIn)
 
-            // Catch any errors
-            .catch(function(error) {
-                console.error("Error: ", error);
-                console.log(error.code);
-                if(error.code == "INVALID_EMAIL"){
-                    alert("Email is invalid")
-                }
-                if(error.code == "EMAIL_TAKEN"){
-                    alert("Email already in use")
-                }
-            });
+        // Catch any errors
+        .catch(function(error) {
+            console.error("Error: ", error);
+            console.log(error.code);
+            if(error.code == "INVALID_EMAIL"){
+                alert("Email is invalid")
+            }
+            if(error.code == "EMAIL_TAKEN"){
+                alert("Email already in use")
+            }
+        });
     };
 
     // SignIn function, reads whatever set-up the user has
@@ -212,7 +230,7 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
             location.reload();
         })
     };
-
+    
     // LogIn function
     $scope.logIn = function() {
         return $scope.authObj.$authWithPassword({
@@ -220,7 +238,7 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
             password: $scope.password
         })
     };
-
+    
     // LogOut function
     $scope.logOut = function() {
         $scope.authObj.$unauth();
@@ -232,10 +250,26 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
 function success(pos) {
     var crd = pos.coords;
 
+    var lat1 = crd.latitude;
+    var lon1 = crd.longitude;
+
     console.log('Your current position is:');
     console.log('Latitude : ' + crd.latitude);
     console.log('Longitude: ' + crd.longitude);
     console.log('More or less ' + crd.accuracy + ' meters.');
+
 };
 
 navigator.geolocation.getCurrentPosition(success);
+
+// function distance(lat1, lon1, lat2, lon2) {
+//     var p = 0.017453292519943295;    // Math.PI / 180
+//     var c = Math.cos;
+//     var a = 0.5 - c((lat2 - lat1) * p)/2 + 
+//           c(lat1 * p) * c(lat2 * p) * 
+//           (1 - c((lon2 - lon1) * p))/2;
+
+//     console.log(12742 * Math.asin(Math.sqrt(a));
+//     return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+// }
+
