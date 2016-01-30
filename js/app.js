@@ -1,7 +1,5 @@
-/**
- * Created by Brad on 1/30/2016.
- */
-console.log("kk");
+'use strict';
+
 var myApp = angular.module('myApp', ['firebase', 'ui.router']);
 var ref = new Firebase("https://winfo.firebaseio.com/");
 
@@ -22,9 +20,24 @@ myApp.config(function($stateProvider) {
     	templateUrl: 'templates/leaderboard.html',
     	controller: 'LeaderboardController'
     })
+    .state('user', {
+        url: '/user',
+        templateUrl: 'templates/user.html',
+        controller: 'UserController'
+    })
+    .state('list', {
+        url: '/list',
+        templateUrl: 'templates/list.html',
+        controller: 'ListController'
+    })
 });
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+
+    function fun () {
+        console.log('fun clicked');
+        getRequest(null, '47.660, -122.305, 47.661, -122.306', 'unknown', null, null, 'DMW4aNjSmkrBenZLWUsF');
+    }
 
     function getRequest (query, boundbox, wheelchair, page, per_page, key) {
         var url = 'http://wheelmap.org/api/nodes/search?api_key=' + key;
@@ -51,10 +64,12 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
         }).then(function successCallback(response) {
             // this callback will be called asynchronously
             // when the response is available
+            console.log(response);
             return response;
         }, function errorCallback(response) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
+            console.log(response);
             return null;
         });
     }
@@ -132,6 +147,14 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
 });
 
 myApp.controller('LeaderboardController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+
+});
+
+myApp.controller('ListController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+
+});
+
+myApp.controller('UserController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
 
 });
 
@@ -222,16 +245,31 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
         $scope.userId = false;
 		$location.path('/');
     }
-
 }
 
 function success(pos) {
     var crd = pos.coords;
 
+    var lat1 = crd.latitude;
+    var lon1 = crd.longitude;
+
     console.log('Your current position is:');
     console.log('Latitude : ' + crd.latitude);
     console.log('Longitude: ' + crd.longitude);
     console.log('More or less ' + crd.accuracy + ' meters.');
+
 };
 
 navigator.geolocation.getCurrentPosition(success);
+
+// function distance(lat1, lon1, lat2, lon2) {
+//     var p = 0.017453292519943295;    // Math.PI / 180
+//     var c = Math.cos;
+//     var a = 0.5 - c((lat2 - lat1) * p)/2 + 
+//           c(lat1 * p) * c(lat2 * p) * 
+//           (1 - c((lon2 - lon1) * p))/2;
+
+//     console.log(12742 * Math.asin(Math.sqrt(a));
+//     return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+// }
+
