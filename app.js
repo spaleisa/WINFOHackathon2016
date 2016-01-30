@@ -120,7 +120,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 	logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
 });
 
-myApp.controller('MainController', function($scope $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
 	var name = $scope.name;
 	var type = $scope.type;
 	var lat = $scope.lat;
