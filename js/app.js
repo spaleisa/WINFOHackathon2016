@@ -290,11 +290,6 @@ function success(pos) {
     lat1 = crd.latitude;
     lon1 = crd.longitude;
 
-    console.log('Your current position is:');
-    console.log('Latitude : ' + crd.latitude);
-    console.log('Longitude: ' + crd.longitude);
-    console.log('More or less ' + crd.accuracy + ' meters.');
-
     console.log(distance(lat1, lon1, 46.6, -120.5));
 
 }
