@@ -13,13 +13,6 @@ function success(pos) {
     lat1 = crd.latitude;
     lon1 = crd.longitude;
 
-    //console.log('Your current position is:');
-    //console.log('Latitude : ' + crd.latitude);
-    //console.log('Longitude: ' + crd.longitude);
-    //console.log('More or less ' + crd.accuracy + ' meters.');
-
-    //console.log(distance(lat1, lon1, 46.6, -120.5));
-
 }
 
 navigator.geolocation.getCurrentPosition(success);
@@ -109,7 +102,11 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
             nodes.forEach(function(node) {
                 var result = {};
                 var dist = distance(node.lat, node.lon, lat1, lon1);
-                result.name = node.name;
+                if (node.name != null || node.name != undefined) {
+                    result.name = node.name;
+                } else {
+                    result.name = "No Name Given"
+                }
                 result.lat = node.lat;
                 result.long = node.lon;
                 result.distance = dist;
@@ -320,35 +317,6 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
     }
 }
 
-var lat1;
-var lon1;
-
-function success(pos) {
-    var crd = pos.coords;
-
-    lat1 = crd.latitude;
-    lon1 = crd.longitude;
-
-}
-
-navigator.geolocation.getCurrentPosition(success);
-
-
-function distance(lat1, lon1, lat2, lon2, unit) {
-        var radlat1 = Math.PI * lat1/180;
-        var radlat2 = Math.PI * lat2/180;
-        var radlon1 = Math.PI * lon1/180;
-        var radlon2 = Math.PI * lon2/180;
-        var theta = lon1-lon2;
-        var radtheta = Math.PI * theta/180;
-        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-        dist = Math.acos(dist);
-        dist = dist * 180/Math.PI;
-        dist = dist * 60 * 1.1515;
-        if (unit=="K") { dist = dist * 1.609344 }
-        if (unit=="N") { dist = dist * 0.8684 }
-        return dist
-}
 
 
 
