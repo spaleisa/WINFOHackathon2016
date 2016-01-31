@@ -4,3 +4,20 @@
 <button ng-click="getNearby()">get button</button>
 <button ng-click="putRequest()">put button</button>
 
+<div class="container">
+	<h2>nearby listings:</h2>
+
+	<table class="table">
+		<tr>
+	        <th>name</th>
+	        <th>distance</th>
+	        <th>status</th>
+	    </tr>
+	    <tr ng-repeat="result in results">
+	        <td>{{result.name}}</td>
+	        <td>{{result.distance}}</td>
+	        <td>{{result.status}}</td>
+	    </tr>
+	</table>
+</div>
+
