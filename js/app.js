@@ -320,8 +320,6 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
     }
 }
 
-<<<<<<< HEAD
-=======
 var lat1;
 var lon1;
 
@@ -330,8 +328,6 @@ function success(pos) {
 
     lat1 = crd.latitude;
     lon1 = crd.longitude;
-
-    distance(lat1, lon1, 46.6, -120.5);
 
 }
 
@@ -353,7 +349,7 @@ function distance(lat1, lon1, lat2, lon2, unit) {
         if (unit=="N") { dist = dist * 0.8684 }
         return dist
 }
->>>>>>> 8fa3571632a387f1346e335711fe63607cfe3233
+
 
 
 
