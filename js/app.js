@@ -181,7 +181,7 @@ myApp.controller('UserController', function($scope, $firebaseAuth, $firebaseArra
     logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
 });
 
-function placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope) {
+function placeSave(user, name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope) {
     var userRef = ref.child("users");
     var name = name;
     var type = type;
@@ -202,6 +202,8 @@ function placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $
 
 function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http){
     // Create a variable 'ref' to reference your firebase storage
+    console.log(email);
+    console.log(password);
     var userRef = ref.child("users");
 
     // Create a firebaseObject of your users, and store this as part of $scope
@@ -230,6 +232,16 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
         // Once the user is created, call the logIn function
         .then($scope.logIn)
 
+        .then(function(authData) {
+            $scope.userId = authData.uid;
+            $scope.users[authData.uid] = {
+                email: $scope.email
+            }
+            $scope.users.$save();
+        })
+        // .then(function() {
+        //     location.reload();
+        // })
         // Catch any errors
         .catch(function(error) {
             console.error("Error: ", error);
@@ -249,8 +261,7 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
             $scope.userId = authData.uid;
             console.log($scope.userId);
             var id = $scope.userId;
-            $scope.badges = $scope.users[id].badges;
-            location.reload();
+            //location.reload();
         })
     };
     
