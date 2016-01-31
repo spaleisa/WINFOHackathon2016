@@ -109,7 +109,11 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
             nodes.forEach(function(node) {
                 var result = {};
                 var dist = distance(node.lat, node.lon, lat1, lon1);
-                result.name = node.name;
+                if (node.name != null || node.name != undefined) {
+                    result.name = node.name;
+                } else {
+                    result.name = "No Name Given"
+                }
                 result.lat = node.lat;
                 result.long = node.lon;
                 result.distance = dist;
