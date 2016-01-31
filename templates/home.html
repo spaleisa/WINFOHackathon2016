@@ -15,7 +15,7 @@
 	    <tr ng-repeat="result in results">
 	        <td>{{result.name}}</td>
 	        <td>{{result.distance | number:2}} mi.</td>
-	        <td>{{result.status}}</td>
+	        <td><a ng-href="{{result.url}}">unknown</a></td>
 	    </tr>
 	</table>
 </div>

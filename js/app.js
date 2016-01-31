@@ -102,6 +102,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
             nodes.forEach(function(node) {
                 var result = {};
                 var dist = distance(node.lat, node.lon, lat1, lon1);
+                var mapurl = 'http://wheelmap.org/en/map#/?';
                 if (node.name != null || node.name != undefined) {
                     result.name = node.name;
                 } else {
@@ -112,6 +113,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
                 result.distance = dist;
                 result.status = node.wheelchair;
                 result.id = node.id;
+                result.url = mapurl + 'lat=' + result.lat + '&long=' + result.lon + '&zoom=15';
                 result.description = node.wheelchair_description;
                 result.toilet = node.wheelchair_toilet;
                 $scope.results.push(result);
