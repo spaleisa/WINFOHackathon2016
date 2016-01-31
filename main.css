@@ -100,12 +100,12 @@ h1 {
 }
 
 .avatar{
-    /*width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 103px;
     margin: 10px auto 30px;
     background-repeat: no-repeat;
     background-size: ;
-    background-image: url("img/logo.png");*/
+    background-image: url("img/logo.png");
 }
 
 .form-box input{
