@@ -15,15 +15,12 @@ body {
   display: inline-block;
   list-style-type: none;
   padding: .5em;
-  margin-left: 1em;
-  margin-right: 1em;
 }
 
 .navbar a {
   color: white;
   font-size: 16px;
   text-decoration: none;
-  font-variant: small-caps; /*links rendered in small caps p.small*/
 }
 
 .navbar a:hover {
@@ -100,12 +97,12 @@ h1 {
 }
 
 .avatar{
-    /*width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 145px;
     margin: 10px auto 30px;
     background-repeat: no-repeat;
     background-size: ;
-    background-image: url("img/logo.png");*/
+    background-image: url("img/logo.png");
 }
 
 .form-box input{
