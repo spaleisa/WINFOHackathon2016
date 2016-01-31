@@ -15,8 +15,6 @@ body {
   display: inline-block;
   list-style-type: none;
   padding: .5em;
-  margin-left: 1em;
-  margin-right: 1em;
 }
 
 .navbar a {
@@ -101,7 +99,7 @@ h1 {
 
 .avatar{
     width: 200px;
-    height: 103px;
+    height: 145px;
     margin: 10px auto 30px;
     background-repeat: no-repeat;
     background-size: ;
