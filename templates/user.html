@@ -1,16 +1,14 @@
 <div class="container">
-	<div class="form-inline pull-right">
-		<br>
-	    <label for="search"><i class="fa fa-search"></i></label>
-	    <input name="query" placeholder="Search">
-	</div>
-
-	<h2>Recent Places:</h2>
-
-	<table class="table">
-	    <tr>
-	        <td>test1</td>
-	        <td>test2</td>
-	    </tr>
-	</table>
+    <div class="login-container">
+        <div id="output"></div>
+        <div class="avatar"></div>
+        <div class="form-box">
+            <form action="" method="">
+                <input name="email" type="email" placeholder="email" ng-model="email"></input>
+                <input name="password" type="password" placeholder="password" ng-model="password"></input>
+                <button class="btn btn-info btn-block login" type="submit" ng-click="login()">Login</button>
+                <button class="btn btn-info btn-block login" type="submit" ng-click="signUp()">Sign Up</button>
+            </form>
+        </div>
+    </div>
 </div>
