@@ -136,6 +136,10 @@ h1 {
     padding: 10px 20px;
 }
 
+th {
+  text-align: center;
+}
+
 .animated {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
