@@ -290,7 +290,7 @@ function success(pos) {
     lat1 = crd.latitude;
     lon1 = crd.longitude;
 
-    console.log(distance(lat1, lon1, 46.6, -120.5));
+    distance(lat1, lon1, 46.6, -120.5);
 
 }
 
