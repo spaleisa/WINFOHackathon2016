@@ -28,6 +28,11 @@ body {
   text-decoration: none;
 }
 
+.btn-success {
+    padding: 8px;
+    margin: 8px;
+}
+
 .navbar {
   position: absolute;
   left: 0px;
