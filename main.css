@@ -21,7 +21,6 @@ body {
   color: white;
   font-size: 16px;
   text-decoration: none;
-  font-variant: small-caps; /*links rendered in small caps p.small*/
 }
 
 .navbar a:hover {

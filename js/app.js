@@ -30,11 +30,13 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
 
-    function fun () {
-        console.log('fun clicked');
-        //getRequest(null, '47.6,-122.3,47.7,-122.34', 'unknown', null, null, 'nGitqa4bz26q76vzeKxG');
-        getRequest('nGitqa4bz26q76vzeKxG', null, '13.341,52.505,13.434,52.523', 'unknown', null, null);
-    }
+    $scope.results = [];
+
+    $scope.fun = function() {
+        var box = '' + String(lon1 - 0.01) + ',' + String(lat1 - 0.01) + ','
+            + String(lon1 + 0.01) + ',' + String(lat1 + 0.01);
+        getRequest('nGitqa4bz26q76vzeKxG', null, box, 'unknown', null, 100);
+    };
 
 
     function getRequest (key, query, boundbox, wheelchair, page, per_page) {
@@ -65,6 +67,22 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
             // this callback will be called asynchronously
             // when the response is available
             console.log(response);
+            var nodes = response.data.nodes;
+            nodes.forEach(function(node) {
+                var result = {};
+                var dist = distance(node.lat, node.lon, lat1, lon1);
+                result.name = node.name;
+                result.lat = node.lat;
+                result.long = node.lon;
+                result.distance = dist;
+                result.status = node.wheelchair;
+                result.id = node.id;
+                result.description = node.wheelchair_description;
+                result.toilet = node.wheelchair_toilet;
+                console.log(result);
+                $scope.results.push(result);
+            });
+
             return response;
         }, function errorCallback(response) {
             // called asynchronously if an error occurs
@@ -77,7 +95,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
     $scope.funtwo = function() {
         console.log('funtwo clicked');
         //http://wheelmap.org/api/nodes/123?api_key=api_key&wheelchair=no&name=White+Horse&type=restaurant&lat=51.0&lon=13.4
-        putRequest('nGitqa4bz26q76vzeKxG', 123, 'restaurant', 51.0, 13.4, 'no', 'White+Horse');
+        putRequest('nGitqa4bz26q76vzeKxG', 356551257, 'place of worship', 47.660135, -122.312389, 'yes');
     };
 
     function putRequest (key, node_id, type, lat, lon, wheelchair, name, wheelchair_description,
@@ -163,7 +181,7 @@ myApp.controller('UserController', function($scope, $firebaseAuth, $firebaseArra
     logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
 });
 
-function placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope) {
+function placeSave(user, name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope) {
     var userRef = ref.child("users");
     var name = name;
     var type = type;
@@ -184,6 +202,8 @@ function placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $
 
 function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http){
     // Create a variable 'ref' to reference your firebase storage
+    console.log(email);
+    console.log(password);
     var userRef = ref.child("users");
 
     // Create a firebaseObject of your users, and store this as part of $scope
@@ -212,6 +232,16 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
         // Once the user is created, call the logIn function
         .then($scope.logIn)
 
+        .then(function(authData) {
+            $scope.userId = authData.uid;
+            $scope.users[authData.uid] = {
+                email: $scope.email
+            }
+            $scope.users.$save();
+        })
+        // .then(function() {
+        //     location.reload();
+        // })
         // Catch any errors
         .catch(function(error) {
             console.error("Error: ", error);
@@ -231,8 +261,7 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
             $scope.userId = authData.uid;
             console.log($scope.userId);
             var id = $scope.userId;
-            $scope.badges = $scope.users[id].badges;
-            location.reload();
+            //location.reload();
         })
     };
     
@@ -252,11 +281,14 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
     }
 }
 
+var lat1;
+var lon1;
+
 function success(pos) {
     var crd = pos.coords;
 
-    var lat1 = crd.latitude;
-    var lon1 = crd.longitude;
+    lat1 = crd.latitude;
+    lon1 = crd.longitude;
 
     console.log('Your current position is:');
     console.log('Latitude : ' + crd.latitude);
