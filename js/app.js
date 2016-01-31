@@ -3,32 +3,39 @@
 var myApp = angular.module('myApp', ['firebase', 'ui.router']);
 var ref = new Firebase("https://winfo.firebaseio.com/");
 
-myApp.config(function($stateProvider) {
-    $stateProvider
-        .state('home', {
-            url: '/',
-            templateUrl: 'templates/home.html',
-            controller: 'HomeController'
-        })
-        .state('main', {
-            url: '/main',
-            templateUrl: 'templates/main.html',
-            controller: 'MainController'
-        })
-        .state('leaderboard', {
-            url: '/leaderboard',
-            templateUrl: 'templates/leaderboard.html',
-            controller: 'LeaderboardController'
-        })
+myApp.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+    .state('home', {
+      url: '/',
+      templateUrl: 'templates/home.html',
+      controller: 'HomeController'
+    })
+    .state('leaderboard', {
+        url: '/leaderboard',
+        templateUrl: 'templates/leaderboard.html',
+        controller: 'LeaderboardController'
+    })
+    .state('user', {
+        url: '/user',
+        templateUrl: 'templates/user.html',
+        controller: 'UserController'
+    })
+    .state('list', {
+        url: '/list',
+        templateUrl: 'templates/list.html',
+        controller: 'ListController'
+    })
+    $urlRouterProvider.otherwise('/');
 });
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
 
-    $scope.fun = function () {
+    function fun () {
         console.log('fun clicked');
         //getRequest(null, '47.6,-122.3,47.7,-122.34', 'unknown', null, null, 'nGitqa4bz26q76vzeKxG');
         getRequest('nGitqa4bz26q76vzeKxG', null, '13.341,52.505,13.434,52.523', 'unknown', null, null);
-    };
+    }
+
 
     function getRequest (key, query, boundbox, wheelchair, page, per_page) {
         var url = 'http://wheelmap.org/api/nodes?api_key=' + key;
@@ -131,25 +138,29 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
             console.log(response);
             return null;
         });
+
+        var name = $scope.name;
+        var type = $scope.type;
+        var lat = $scope.lat;
+        var lon = $scope.lon;
+        var date = $scope.date;
+        placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope);
     }
-
-    var email = $scope.email;
-    var password = $scope.password;
-    logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
-});
-
-myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
-    var name = $scope.name;
-    var type = $scope.type;
-    var lat = $scope.lat;
-    var lon = $scope.lon;
-    var date = $scope.date;
-    placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope);
 
 });
 
 myApp.controller('LeaderboardController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
 
+});
+
+myApp.controller('ListController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+
+});
+
+myApp.controller('UserController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+    var email = $scope.email;
+    var password = $scope.password;
+    logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
 });
 
 function placeSave(name, type, lat, lon, date, $firebaseObject, $firebaseAuth, $location, $http, $scope) {
@@ -177,10 +188,10 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
 
     // Create a firebaseObject of your users, and store this as part of $scope
     $scope.users = $firebaseObject(userRef);
-
+    
     // Create authorization object that referes to firebase
     $scope.authObj = $firebaseAuth(ref);
-
+    
     // Test if already logged in
     var authData = $scope.authObj.$getAuth();
     if (authData) {
@@ -194,24 +205,24 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
 
         // Authenticate user
         $scope.authObj.$createUser({
-                email: $scope.email,
-                password: $scope.password
-            })
+            email: $scope.email,
+            password: $scope.password
+        })
 
-            // Once the user is created, call the logIn function
-            .then($scope.logIn)
+        // Once the user is created, call the logIn function
+        .then($scope.logIn)
 
-            // Catch any errors
-            .catch(function(error) {
-                console.error("Error: ", error);
-                console.log(error.code);
-                if(error.code == "INVALID_EMAIL"){
-                    alert("Email is invalid")
-                }
-                if(error.code == "EMAIL_TAKEN"){
-                    alert("Email already in use")
-                }
-            });
+        // Catch any errors
+        .catch(function(error) {
+            console.error("Error: ", error);
+            console.log(error.code);
+            if(error.code == "INVALID_EMAIL"){
+                alert("Email is invalid")
+            }
+            if(error.code == "EMAIL_TAKEN"){
+                alert("Email already in use")
+            }
+        });
     };
 
     // SignIn function, reads whatever set-up the user has
@@ -224,7 +235,7 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
             location.reload();
         })
     };
-
+    
     // LogIn function
     $scope.logIn = function() {
         return $scope.authObj.$authWithPassword({
@@ -232,7 +243,7 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
             password: $scope.password
         })
     };
-
+    
     // LogOut function
     $scope.logOut = function() {
         $scope.authObj.$unauth();
@@ -244,10 +255,39 @@ function logInSignUp(email, password, $scope, $firebaseObject, $firebaseAuth, $l
 function success(pos) {
     var crd = pos.coords;
 
+    var lat1 = crd.latitude;
+    var lon1 = crd.longitude;
+
     console.log('Your current position is:');
     console.log('Latitude : ' + crd.latitude);
     console.log('Longitude: ' + crd.longitude);
     console.log('More or less ' + crd.accuracy + ' meters.');
+
+    console.log(distance(lat1, lon1, 46.6, -120.5));
+
 };
 
 navigator.geolocation.getCurrentPosition(success);
+
+
+function distance(lat1, lon1, lat2, lon2, unit) {
+        var radlat1 = Math.PI * lat1/180
+        var radlat2 = Math.PI * lat2/180
+        var radlon1 = Math.PI * lon1/180
+        var radlon2 = Math.PI * lon2/180
+        var theta = lon1-lon2
+        var radtheta = Math.PI * theta/180
+        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        dist = Math.acos(dist)
+        dist = dist * 180/Math.PI
+        dist = dist * 60 * 1.1515
+        if (unit=="K") { dist = dist * 1.609344 }
+        if (unit=="N") { dist = dist * 0.8684 }
+        return dist
+}
+
+
+
+
+
+
