@@ -14,7 +14,7 @@
 	    </tr>
 	    <tr ng-repeat="result in results">
 	        <td>{{result.name}}</td>
-	        <td>{{result.distance}}</td>
+	        <td>{{result.distance | number:2}}</td>
 	        <td>{{result.status}}</td>
 	    </tr>
 	</table>
