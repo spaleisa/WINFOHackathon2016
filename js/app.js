@@ -32,27 +32,31 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 
     function fun () {
         console.log('fun clicked');
-        getRequest(null, '47.660, -122.305, 47.661, -122.306', 'unknown', null, null, 'DMW4aNjSmkrBenZLWUsF');
+        //getRequest(null, '47.6,-122.3,47.7,-122.34', 'unknown', null, null, 'nGitqa4bz26q76vzeKxG');
+        getRequest('nGitqa4bz26q76vzeKxG', null, '13.341,52.505,13.434,52.523', 'unknown', null, null);
     }
 
-    function getRequest (query, boundbox, wheelchair, page, per_page, key) {
-        var url = 'http://wheelmap.org/api/nodes/search?api_key=' + key;
 
-        if (query != null) {
+    function getRequest (key, query, boundbox, wheelchair, page, per_page) {
+        var url = 'http://wheelmap.org/api/nodes?api_key=' + key;
+
+        if (query != null && query != undefined) {
             url += '&q=' + query;
         }
-        if (boundbox != null) {
-            url += '&bbox='; // + USER LAT, LONG BOUNDS + X DISTANCE
+        if (boundbox != null && boundbox != undefined) {
+            url += '&bbox=' + boundbox;
         }
-        if (wheelchair != null) {
+        if (wheelchair != null && wheelchair != undefined) {
             url += '&wheelchair=' + wheelchair;
         }
-        if (page != null) {
+        if (page != null && page != undefined) {
             url += '&page=' + page;
         }
-        if (per_page != null) {
+        if (per_page != null && per_page != undefined) {
             url += '&per_page=' + per_page;
         }
+
+        console.log(url);
 
         $http({
             method: 'GET',
@@ -70,59 +74,68 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
         });
     }
 
-    function putRequest (node_id, type, lat, lon, wheelchair, name, wheelchair_description,
-                         street, housenumber, city, postcode, website, phone, key) {
+    $scope.funtwo = function() {
+        console.log('funtwo clicked');
+        //http://wheelmap.org/api/nodes/123?api_key=api_key&wheelchair=no&name=White+Horse&type=restaurant&lat=51.0&lon=13.4
+        putRequest('nGitqa4bz26q76vzeKxG', 123, 'restaurant', 51.0, 13.4, 'no', 'White+Horse');
+    };
+
+    function putRequest (key, node_id, type, lat, lon, wheelchair, name, wheelchair_description,
+                         street, housenumber, city, postcode, website, phone) {
         var url = 'http://wheelmap.org/api/nodes/' + node_id + '?api_key=' + key;
 
-        if (type != null) {
+        console.log(phone);
+        if (type != null && type != undefined) {
             url += '&type=' + type;
         }
-        if (lat != null) {
+        if (lat != null && lat != undefined) {
             url += '&lat=' + lat;
         }
-        if (lon != null) {
+        if (lon != null && lon != undefined) {
             url += '&lon=' + lon;
         }
-        if (wheelchair != null) {
+        if (wheelchair != null && wheelchair != undefined) {
             url += '&wheelchair=' + wheelchair;
         }
-        if (name != null) {
+        if (name != null && name != undefined) {
             url += '&name=' + name;
         }
-        if (wheelchair_description != null) {
+        if (wheelchair_description != null && wheelchair_description != undefined) {
             url += '&wheelchair_description=' + wheelchair_description;
         }
-        if (street != null) {
+        if (street != null && street != undefined) {
             url += '&street=' + street;
         }
-        if (housenumber != null) {
+        if (housenumber != null && housenumber != undefined) {
             url += '&housenumber=' + housenumber;
         }
-        if (city != null) {
+        if (city != null && city != undefined) {
             url += '&city=' + city;
         }
-        if (postcode != null) {
+        if (postcode != null && postcode != undefined) {
             url += '&postcode=' + postcode;
         }
-        if (website != null) {
+        if (website != null && website != undefined) {
             url += '&website=' + website;
         }
-        if (phone != null) {
+        if (phone != null && phone != undefined) {
             url += '&phone=' + phone;
         }
 
-        url += 'method=PUT';
+        //url += 'method=PUT';
 
         $http({
-            method: 'POST',
+            method: 'PUT',
             url: url
         }).then(function successCallback(response) {
             // this callback will be called asynchronously
             // when the response is available
+            console.log(response);
             return response;
         }, function errorCallback(response) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
+            console.log(response);
             return null;
         });
 
@@ -252,22 +265,22 @@ function success(pos) {
 
     console.log(distance(lat1, lon1, 46.6, -120.5));
 
-};
+}
 
 navigator.geolocation.getCurrentPosition(success);
 
 
 function distance(lat1, lon1, lat2, lon2, unit) {
-        var radlat1 = Math.PI * lat1/180
-        var radlat2 = Math.PI * lat2/180
-        var radlon1 = Math.PI * lon1/180
-        var radlon2 = Math.PI * lon2/180
-        var theta = lon1-lon2
-        var radtheta = Math.PI * theta/180
+        var radlat1 = Math.PI * lat1/180;
+        var radlat2 = Math.PI * lat2/180;
+        var radlon1 = Math.PI * lon1/180;
+        var radlon2 = Math.PI * lon2/180;
+        var theta = lon1-lon2;
+        var radtheta = Math.PI * theta/180;
         var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-        dist = Math.acos(dist)
-        dist = dist * 180/Math.PI
-        dist = dist * 60 * 1.1515
+        dist = Math.acos(dist);
+        dist = dist * 180/Math.PI;
+        dist = dist * 60 * 1.1515;
         if (unit=="K") { dist = dist * 1.609344 }
         if (unit=="N") { dist = dist * 0.8684 }
         return dist
