@@ -32,7 +32,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 
     $scope.results = [];
 
-    $scope.fun = function() {
+    $scope.getNearby = function() {
         var box = '' + String(lon1 - 0.01) + ',' + String(lat1 - 0.01) + ','
             + String(lon1 + 0.01) + ',' + String(lat1 + 0.01);
         getRequest('nGitqa4bz26q76vzeKxG', null, box, 'unknown', null, 100);
@@ -92,7 +92,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
         });
     }
 
-    $scope.funtwo = function() {
+    $scope.updateNode = function() {
         console.log('funtwo clicked');
         //http://wheelmap.org/api/nodes/123?api_key=api_key&wheelchair=no&name=White+Horse&type=restaurant&lat=51.0&lon=13.4
         putRequest('nGitqa4bz26q76vzeKxG', 356551257, 'place of worship', 47.660135, -122.312389, 'yes');
