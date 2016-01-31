@@ -12,7 +12,7 @@
 	        <th>distance</th>
 	        <th>status</th>
 	    </tr>
-	    <tr ng-repeat="result in results">
+	    <tr ng-repeat="result in results | orderBy : 'distance'">
 	        <td>{{result.name}}</td>
 	        <td>{{result.distance | number:2}} mi.</td>
 	        <td><a ng-href="{{result.url}}">unknown</a></td>
