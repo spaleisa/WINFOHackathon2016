@@ -105,18 +105,18 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
                 var mapurl = 'http://wheelmap.org/en/map#/?';
                 if (node.name != null || node.name != undefined) {
                     result.name = node.name;
+                    result.lat = node.lat;
+                    result.long = node.lon;
+                    result.distance = dist;
+                    result.status = node.wheelchair;
+                    result.id = node.id;
+                    result.url = mapurl + 'lat=' + result.lat + '&long=' + result.lon + '&zoom=18';
+                    result.description = node.wheelchair_description;
+                    result.toilet = node.wheelchair_toilet;
+                    $scope.results.push(result);
                 } else {
                     result.name = "No Name Given"
                 }
-                result.lat = node.lat;
-                result.long = node.lon;
-                result.distance = dist;
-                result.status = node.wheelchair;
-                result.id = node.id;
-                result.url = mapurl + 'lat=' + result.lat + '&long=' + result.lon + '&zoom=18';
-                result.description = node.wheelchair_description;
-                result.toilet = node.wheelchair_toilet;
-                $scope.results.push(result);
             });
 
             return response;
