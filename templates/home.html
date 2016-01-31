@@ -9,14 +9,14 @@
 
 	<table class="table">
 		<tr>
-	        <th>location</th>
+	        <th>name</th>
 	        <th>distance</th>
 	        <th>status</th>
 	    </tr>
 	    <tr ng-repeat="result in results">
-	        <td>{{}}</td>
-	        <td>{{}}</td>
-	        <td>{{}}</td>
+	        <td>{{result.name}}</td>
+	        <td>{{result.distance}}</td>
+	        <td>{{result.status}}</td>
 	    </tr>
 	</table>
 </div>
