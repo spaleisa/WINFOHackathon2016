@@ -33,6 +33,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
     $scope.results = [];
 
     $scope.getNearby = function() {
+        console.log('get nearby called');
         var box = '' + String(lon1 - 0.01) + ',' + String(lat1 - 0.01) + ','
             + String(lon1 + 0.01) + ',' + String(lat1 + 0.01);
         getRequest('nGitqa4bz26q76vzeKxG', null, box, 'unknown', null, 100);
